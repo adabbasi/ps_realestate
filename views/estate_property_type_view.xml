@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="view_estate_property_type_tree" model="ir.ui.view">
+        <field name="name">estate.property.type.tree</field>
+        <field name="model">estate.property.type</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="offer_count"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_estate_property_type_form" model="ir.ui.view">
+        <field name="name">estate.property.type.form</field>
+        <field name="model">estate.property.type</field>
+        <field name="arch" type="xml">
+            <form string="Property Type">
+                <sheet>
+
+                      <div class="oe_button_box" name="button_box">
+                            <button  type="object"  name="estate_offer_action" class="oe_stat_button" icon="fa-home">
+                                <field string="Prop. Offers" name="offer_count" widget="statinfo"/>
+                            </button>
+                      </div>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                    <notebook>
+                        <page string="Properties">
+
+                                <field name="property_type_ids">
+                                    <tree string="properties" >
+                                        <field name="prop_name"/>
+                                        <field name="expected_price"/>
+                                    </tree>
+                                </field>
+
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="estate_property_type_action" model="ir.actions.act_window">
+        <field name="name">Property types</field>
+        <field name="res_model">estate.property.type</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first property type!
+            </p>
+        </field>
+
+    </record>
+
+    <record id="view_estate_property_offer_tree" model="ir.ui.view">
+        <field name="name">estate.property.offer.tree</field>
+        <field name="model">estate.property.offer</field>
+        <field name="arch" type="xml">
+            <tree decoration-success="status=='accepted'" decoration-danger="status=='rejected'">
+                <field name="price"/>
+                <field name="partner_id"/>
+                <field name="validity"/>
+                <field name="date_deadline"/>
+                <field name="property_type_id"/>
+<!--                <button name="action_accepted"  type="object" class="fa fa-check"/>-->
+<!--                <button name="action_rejected"  type="object" class="fa fa-times"/>-->
+                <field name="status" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="estate_offer_action" model="ir.actions.act_window">
+        <field name="name">Offers</field>
+        <field name="res_model">estate.property.offer</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_property_type"
+              name="Property type"
+              action="estate_property_type_action"
+              parent="menu_settings"
+              sequence="0"/>
+
+</odoo>
